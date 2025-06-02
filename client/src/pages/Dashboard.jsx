@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import SkillForm from '../components/SkillForm';
 const Dashboard = () => {
   return (
     <div style={styles.container}>
