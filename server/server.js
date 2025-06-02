@@ -7,19 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ Connected to MongoDB'))
-  .catch((err) => console.error('❌ MongoDB connection failed:', err.message));
+// Connect to DB (assumed done)
 
+// Use auth routes
+const authRoutes = require('./routes/auth');
+app.use('/api', authRoutes);
 
-// Test Route
-app.get('/', (req, res) => {
-  res.send('SkillSwap backend is running!');
-});
-
-// Start Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
