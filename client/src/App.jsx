@@ -6,7 +6,8 @@ import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import PeerLearning from './pages/PeerLearning';
 import VideoCall from './pages/VideoCall';
-
+import SkillManager from './pages/SkillManager';
+import Matches from './pages/Matches';
 const App = () => {
   return (
     <Routes>
@@ -17,7 +18,9 @@ const App = () => {
       <Route path="/profile" element={<Profile />} />
       <Route path="/peer-learning" element={<PeerLearning />} />
       <Route path="/call/:channelName" element={<VideoCall />} />
-      
+      <Route path="/skills" element={<SkillManager />} />
+      <Route path="/matches" element={<Matches />} />
+
       {/* Wildcard route - must be last */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

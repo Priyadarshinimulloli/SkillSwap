@@ -13,6 +13,9 @@ const Dashboard = () => {
         <Link to="/peer-learning" style={styles.card}>🔗 Peer Learning</Link>
         <Link to="/sessions" style={styles.card}>🎥 Learning Sessions</Link>
         <Link to="/credits" style={styles.card}>💰 Barter Credits</Link>
+        <Link to="/skills" style={styles.card}>🧠 Manage My Skills</Link>
+        <Link to="/matches" style={styles.card}>💡 Match Suggestions</Link> {/* Added this link */}
+
       </div>
     </div>
   );
