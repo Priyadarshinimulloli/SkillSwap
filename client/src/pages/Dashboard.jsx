@@ -10,6 +10,7 @@ const Dashboard = () => {
       <div style={styles.navContainer}>
         <Link to="/profile" style={styles.card}>👤 My Profile</Link>
         <Link to="/marketplace" style={styles.card}>🛒 Skill Marketplace</Link>
+        <Link to="/peer-learning" style={styles.card}>🔗 Peer Learning</Link>
         <Link to="/sessions" style={styles.card}>🎥 Learning Sessions</Link>
         <Link to="/credits" style={styles.card}>💰 Barter Credits</Link>
       </div>
