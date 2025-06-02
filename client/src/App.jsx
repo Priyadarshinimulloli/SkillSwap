@@ -1,20 +1,22 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Signup from "./components/Signup";
-import Login from "./components/Login";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';  // or Signup if you want to rename
+import Profile from './pages/Profile';
+import Dashboard from './pages/Dashboard';
 
-export default function App() {
+const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/" element={<Dashboard />} /> {/* Home route */}
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/dashboard"
-          element={<h2>Welcome to Dashboard (protected page)</h2>}
-        />
-        <Route path="*" element={<h2>Page Not Found</h2>} />
+        <Route path="/register" element={<Register />} /> {/* Use 'register' instead of 'signup' */}
+        <Route path="/profile" element={<Profile />} />
+        <Route path="*" element={<Navigate to="/" replace />} /> {/* Redirect unknown routes */}
       </Routes>
     </Router>
   );
-}
+};
+
+export default App;
