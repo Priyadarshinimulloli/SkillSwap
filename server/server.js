@@ -1,112 +1,101 @@
- const express = require('express');
- const cors = require('cors');
- const mongoose = require('mongoose');
- require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+
+const User = require('./models/User');
+const Transaction = require('./models/Transaction');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
- // MongoDB Connection
- mongoose.connect(process.env.MONGO_URI)
-   .then(() => console.log('✅ Connected to MongoDB'))
- .catch((err) => console.error('❌ MongoDB connection failed:', err.message));
+// MongoDB connection string — replace with your own
+const mongoURI = 'mongodb+srv://priyadarshinimulloli:priya01@cluster0.p1ssx.mongodb.net/skillswap?retryWrites=true&w=majority&appName=Cluster0';
 
+mongoose.connect(mongoURI)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log('MongoDB connection error:', err));
 
-// // // Test Route
-// // app.get('/', (req, res) => {
-// //   res.send('SkillSwap backend is running!');
-// // });
+// Health check
+app.get('/', (req, res) => {
+  res.send('SkillSwap backend is running');
+});
 
-// // // Start Server
-// // const PORT = process.env.PORT || 5000;
-// // app.listen(PORT, () => {
-// //   console.log(`🚀 Server running on port ${PORT}`);
-//  import express from 'express';
-//  import dotenv from 'dotenv';
-//  import cors from 'cors';
-//  import connectDB from './config/db.js';
-// import userRoutes from './routes/userRoutes.js';
+// Create a new user
+app.post('/users', async (req, res) => {
+  try {
+    const { name, email, skillsOffered, skillsWanted } = req.body;
+    const user = new User({ name, email, skillsOffered, skillsWanted });
+    await user.save();
+    res.status(201).json(user);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
-//  dotenv.config();
-//  connectDB();
+// Get user info by id
+app.get('/users/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json(user);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
 
-// const app = express();
-// app.use(cors());
-//  app.use(express.json());
+// Transfer credits from one user to another
+app.post('/users/transfer', async (req, res) => {
+  try {
+    const { fromUserId, toUserId, credits, description } = req.body;
 
-//  app.use('/api/users', userRoutes);
+    if (!credits || credits <= 0) return res.status(400).json({ error: 'Invalid credits amount' });
+    if (!fromUserId || !toUserId) return res.status(400).json({ error: 'Both user IDs required' });
 
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-// // const express = require('express');
-// // const mongoose = require('mongoose');
-// // const cors = require('cors');
+    if (fromUserId === toUserId) return res.status(400).json({ error: 'Cannot transfer credits to self' });
 
-// // const app = express();
-// // app.use(cors());
-// // app.use(express.json());
+    const fromUser = await User.findById(fromUserId);
+    const toUser = await User.findById(toUserId);
 
-// // // Connect to MongoDB
-// // mongoose.connect('mongodb://localhost:27017/skillmatch', {
-// //   useNewUrlParser: true,
-// //   useUnifiedTopology: true,
-// // }).then(() => console.log('MongoDB connected'))
-// //   .catch(err => console.log('MongoDB connection error:', err));
+    if (!fromUser || !toUser) return res.status(404).json({ error: 'User(s) not found' });
+    if (fromUser.credits < credits) return res.status(400).json({ error: 'Insufficient credits' });
 
-// // // Define schema & model
-// // const userSchema = new mongoose.Schema({
-// //   username: { type: String, required: true },
-// //   skillsOffered: [String],
-// //   skillsWanted: [String]
-// // });
-// // const User = mongoose.model('User', userSchema);
+    // Perform credit transfer
+    fromUser.credits -= credits;
+    toUser.credits += credits;
 
-// // // API Routes
-// // app.get('/api/users/:id/skills', async (req, res) => {
-// //   try {
-//     const user = await User.findById(req.params.id);
-//     if (!user) return res.status(404).json({ message: 'User not found' });
-//     res.json({
-//       skillsOffered: user.skillsOffered,
-//       skillsWanted: user.skillsWanted
-//     });
-//   } catch (err) {
-//     res.status(500).json({ message: 'Server error' });
-//   }
-// });
+    await fromUser.save();
+    await toUser.save();
 
-// app.put('/api/users/:id/skills', async (req, res) => {
-//   try {
-//     const { skillsOffered, skillsWanted } = req.body;
-//     const user = await User.findById(req.params.id);
-//     if (!user) return res.status(404).json({ message: 'User not found' });
+    // Record transaction
+    const transaction = new Transaction({
+      fromUser: fromUser._id,
+      toUser: toUser._id,
+      credits,
+      description,
+    });
+    await transaction.save();
 
-//     user.skillsOffered = skillsOffered || [];
-//     user.skillsWanted = skillsWanted || [];
+    res.json({ fromUser, toUser, transaction });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
-//     await user.save();
+// Get all transactions (optional - for admin or user viewing)
+app.get('/transactions', async (req, res) => {
+  try {
+    const transactions = await Transaction.find()
+      .populate('fromUser', 'name email')
+      .populate('toUser', 'name email')
+      .sort({ createdAt: -1 });
+    res.json(transactions);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
-//     res.json({
-//       skillsOffered: user.skillsOffered,
-//       skillsWanted: user.skillsWanted
-//     });
-//   } catch (err) {
-//     res.status(500).json({ message: 'Server error' });
-//   }
-// });
-
-// app.post('/api/users', async (req, res) => {
-//   try {
-//     const { username } = req.body;
-//     const newUser = new User({ username, skillsOffered: [], skillsWanted: [] });
-//     await newUser.save();
-//     res.json(newUser);
-//   } catch (err) {
-//     res.status(500).json({ message: 'Server error' });
-//   }
-// });
-
-// // Start the server
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+});

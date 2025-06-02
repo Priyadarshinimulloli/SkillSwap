@@ -1,63 +1,28 @@
-// // import React from 'react';
-// // import { Routes, Route, Navigate } from 'react-router-dom';
-// // import Login from './pages/Login';
-// // import Register from './pages/Register';
-// // import Profile from './pages/Profile'; 
-
-// // const Home = () => <h1>Welcome to SkillSwap!</h1>;
-
-// // const App = () => {
-// //   return (
-// //     <Routes>
-// //       <Route path="/" element={<Home />} />
-// //       <Route path="/login" element={<Login />} />
-// //       <Route path="/register" element={<Register />} />
-// //       <Route path="/profile" element={<Profile />} /> 
-// //       <Route path="*" element={<Navigate to="/" replace />} />
-// //     </Routes>
-// //   );
-// // };
-
-// // export default App;
-
-// import React from 'react';
-// import { Routes, Route, Navigate } from 'react-router-dom';
-// import Login from './pages/Login';
-// import Register from './pages/Register';
-// import Profile from './pages/Profile';
-// import Dashboard from './pages/Dashboard';
-
-// const App = () => {
-//   return (
-//     <Routes>
-//       <Route path="/" element={<Dashboard />} /> {/* 👈 Home route */}
-//       <Route path="/login" element={<Login />} />
-//       <Route path="/register" element={<Register />} />
-//       <Route path="/profile" element={<Profile />} />
-//       <Route path="*" element={<Navigate to="/" replace />} />
-//     </Routes>
-//   );
-// };
-
-// export default App;
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
-import SkillMatchPage from './pages/SkillMatchPage'; // ✅ import
+import PeerLearning from './pages/PeerLearning';
+import VideoCall from './pages/VideoCall';
+import SkillForm from './pages/SkillMatchPage';
+import SkillMatchPage from './pages/SkillMatchPage';
+
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/" element={<Dashboard />} /> {/* Home */}
+      <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+            <Route path="/register" element={<Register />} />
       <Route path="/profile" element={<Profile />} />
-      
+      <Route path="/peer-learning" element={<PeerLearning />} />
+      <Route path="/call/:channelName" element={<VideoCall />} />
+            <Route path="/marketplace" element={<SkillMatchPage />} />
 
-<Route path="/marketplace" element={<SkillMatchPage />} />
-
+      {/* Wildcard route - must be last */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
