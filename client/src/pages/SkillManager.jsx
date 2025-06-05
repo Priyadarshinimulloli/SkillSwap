@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './SkillManager.css'; // External CSS file for styling
 
 const SkillManager = () => {
   const [skillsOffered, setSkillsOffered] = useState(["React"]);
@@ -25,73 +26,50 @@ const SkillManager = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h2>🛠️ Skill Management</h2>
+    <div className="skill-manager-container">
+      <h2 className="skill-manager-title">🛠️ Skill Management</h2>
 
-      <div style={styles.section}>
+      <div className="skill-card">
         <h3>Skills I Can Teach</h3>
         <ul>
           {skillsOffered.map((skill, idx) => (
             <li key={idx}>
               {skill}
-              <button onClick={() => deleteSkill('offered', idx)} style={styles.del}>❌</button>
+              <button onClick={() => deleteSkill('offered', idx)} className="del-btn">❌</button>
             </li>
           ))}
         </ul>
-        <input
-          value={newOffered}
-          onChange={e => setNewOffered(e.target.value)}
-          placeholder="Add skill you offer"
-        />
-        <button onClick={() => addSkill('offered')} style={styles.addBtn}>Add</button>
+        <div className="input-group">
+          <input
+            value={newOffered}
+            onChange={e => setNewOffered(e.target.value)}
+            placeholder="Add skill you offer"
+          />
+          <button onClick={() => addSkill('offered')} className="add-btn">Add</button>
+        </div>
       </div>
 
-      <div style={styles.section}>
+      <div className="skill-card">
         <h3>Skills I Want to Learn</h3>
         <ul>
           {skillsWanted.map((skill, idx) => (
             <li key={idx}>
               {skill}
-              <button onClick={() => deleteSkill('wanted', idx)} style={styles.del}>❌</button>
+              <button onClick={() => deleteSkill('wanted', idx)} className="del-btn">❌</button>
             </li>
           ))}
         </ul>
-        <input
-          value={newWanted}
-          onChange={e => setNewWanted(e.target.value)}
-          placeholder="Add skill you want"
-        />
-        <button onClick={() => addSkill('wanted')} style={styles.addBtn}>Add</button>
+        <div className="input-group">
+          <input
+            value={newWanted}
+            onChange={e => setNewWanted(e.target.value)}
+            placeholder="Add skill you want"
+          />
+          <button onClick={() => addSkill('wanted')} className="add-btn">Add</button>
+        </div>
       </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: '2rem',
-    maxWidth: '600px',
-    margin: 'auto',
-    textAlign: 'center',
-  },
-  section: {
-    marginBottom: '2rem',
-  },
-  addBtn: {
-    marginLeft: '1rem',
-    padding: '0.5rem 1rem',
-    backgroundColor: '#0984e3',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px',
-  },
-  del: {
-    marginLeft: '10px',
-    backgroundColor: 'transparent',
-    border: 'none',
-    cursor: 'pointer',
-    color: 'red',
-  },
 };
 
 export default SkillManager;
