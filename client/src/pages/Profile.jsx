@@ -26,6 +26,7 @@ const Profile = () => {
       .then(res => {
         setProfile(res.data);
         setPreview(res.data.profilePic);
+        
       })
       .catch(err => console.log("No existing profile"));
   }, []);
