@@ -1,7 +1,9 @@
+
 // App.jsx
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
+// Import pages at the top
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import Dashboard from './pages/Dashboard';
@@ -12,17 +14,13 @@ import SkillManager from './pages/SkillManager';
 import Matches from './pages/Matches';
 import SkillMatchPage from './pages/SkillMatchPage';
 
+// Your App component starts here
 const App = () => {
   return (
     <Routes>
-      {/* Redirect root to login */}
       <Route path="/" element={<Navigate to="/login" replace />} />
-
-      {/* Auth Routes */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<SignupPage />} />
-
-      {/* Main App Routes */}
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/peer-learning" element={<PeerLearning />} />
@@ -30,8 +28,6 @@ const App = () => {
       <Route path="/skills" element={<SkillManager />} />
       <Route path="/matches" element={<Matches />} />
       <Route path="/marketplace" element={<SkillMatchPage />} />
-
-      {/* Wildcard fallback */}
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
     
