@@ -216,11 +216,24 @@
 
 // export default Dashboard;
 // pages/Dashboard.jsx
-import React from 'react';
+
+
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import ChatBox from '../components/ChatBox'; // ✅ Import ChatBox
+import ChatBox from '../components/ChatBox';
 
 const Dashboard = () => {
+  const [showChat, setShowChat] = useState(false);
+
+  const handleNotificationClick = () => {
+    alert('🔔 You have no new notifications at the moment!');
+    // In future, replace alert with dropdown or modal.
+  };
+
+  const toggleChat = () => {
+    setShowChat((prev) => !prev);
+  };
+
   return (
     <div style={styles.wrapper}>
       {/* Sidebar */}
@@ -240,7 +253,7 @@ const Dashboard = () => {
       {/* Main Area */}
       <div style={styles.main}>
         <div style={styles.topbar}>
-          <span style={styles.notifications}>🔔 Notifications</span>
+          <span onClick={handleNotificationClick} style={styles.notifications}>🔔 Notifications</span>
           <span style={styles.user}>🙍‍♂️ Hello, User</span>
         </div>
 
@@ -258,8 +271,17 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* ✅ ChatBox Component */}
-        <ChatBox />
+        {/* ✅ Chat Button */}
+        <button onClick={toggleChat} style={styles.chatButton}>
+          {showChat ? '❌ Close Chat' : '💬 Open Chat'}
+        </button>
+
+        {/* ✅ Conditional ChatBox */}
+        {showChat && (
+          <div style={styles.chatBox}>
+            <ChatBox />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -299,31 +321,21 @@ const styles = {
   },
   main: {
     flex: 1,
-  display: 'flex',
-  flexDirection: 'column',
-  padding: '1rem 2rem',
-  position: 'relative',
-  backgroundColor: 'rgba(255, 255, 255, 0.2)',  // translucent white
-  backdropFilter: 'blur(12px)',                 // glass blur
-  WebkitBackdropFilter: 'blur(12px)',
-  borderRadius: '20px',
-  boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '1rem 2rem',
+    position: 'relative',
   },
   topbar: {
     display: 'flex',
-  justifyContent: 'flex-end',
-  gap: '2rem',
-  paddingBottom: '1rem',
-  borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-  backgroundColor: 'rgba(255, 255, 255, 0.15)',
-  backdropFilter: 'blur(10px)',
-  WebkitBackdropFilter: 'blur(10px)',
-  borderRadius: '10px',
-  padding: '10px 20px',
-  marginBottom: '1rem',
+    justifyContent: 'flex-end',
+    gap: '2rem',
+    paddingBottom: '1rem',
+    borderBottom: '1px solid #ccc',
   },
   notifications: {
     cursor: 'pointer',
+    fontWeight: '600',
   },
   user: {
     fontWeight: '600',
@@ -350,29 +362,41 @@ const styles = {
     margin: '0 auto',
   },
   card: {
-  padding: '1.5rem',
-  backgroundColor: 'rgba(62, 84, 172, 0.25)', // translucent blue
-  borderRadius: '14px',
-  textDecoration: 'none',
-  color: '#FFFFFF',
-  fontSize: '1.1rem',
-  fontWeight: '600',
-  boxShadow: '0 6px 20px rgba(0, 0, 0, 0.15)',
-  backdropFilter: 'blur(8px)',
-  WebkitBackdropFilter: 'blur(8px)',
-  border: '1px solid rgba(255,255,255,0.2)',
-  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+    padding: '1.5rem',
+    backgroundColor: '#3E54AC',
+    borderRadius: '14px',
+    textDecoration: 'none',
+    color: '#FFFFFF',
+    fontSize: '1.1rem',
+    fontWeight: '600',
+    boxShadow: '0 6px 14px rgba(0, 0, 0, 0.1)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
   },
-  position: 'fixed',
-    right: '1.5rem',
-    bottom: '1.5rem',
-   width: '260px',
-   padding: '1rem',
-  backgroundColor: '#ffffff',
-    border: '1px solid #ccc',
-   borderRadius: '10px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+  chatButton: {
+    position: 'fixed',
+    bottom: '25px',
+    right: '25px',
+    backgroundColor: '#3E54AC',
+    color: '#fff',
+    padding: '12px 20px',
+    borderRadius: '30px',
+    border: 'none',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    zIndex: 999,
+  },
+  chatBox: {
+    position: 'fixed',
+    bottom: '80px',
+    right: '25px',
+    width: '300px',
+    height: '400px',
+    backgroundColor: '#fff',
+    borderRadius: '12px',
+    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
+    zIndex: 998,
+    overflow: 'hidden',
+  },
 };
-
 
 export default Dashboard;
