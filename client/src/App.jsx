@@ -7,6 +7,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import Dashboard from './pages/Dashboard';
+
 import Profile from './pages/Profile';
 import PeerLearning from './pages/PeerLearning';
 import VideoCall from './pages/VideoCall';
