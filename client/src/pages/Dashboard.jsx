@@ -1,7 +1,7 @@
 // Dashboard.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import DashboardProfile from './DashboardProfile';
+import DashboardProfile from './DashBoardProfile';
 
 const Dashboard = () => {
   const email = 'test@example.com'; // your test email
