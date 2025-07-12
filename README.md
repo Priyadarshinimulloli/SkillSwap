@@ -202,3 +202,34 @@ MIT License - Open source project
 ---
 
 ### 🎯 **Built for Hackathon - Ready to Scale!**
+| **Video API**  | [Daily.co](https://www.daily.co/)     |
+
+---
+
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repo
+
+```bash
+git clone https://github.com/your-username/skillswap.git
+cd skillswap
+
+2. Setup Backend
+
+cd server
+npm install
+touch .env
+
+Add to .env file:
+MONGO_URI=your_mongodb_connection_string
+
+node server.js
+
+3. Setup Frontend
+
+cd ../client
+npm install
+npm run dev
