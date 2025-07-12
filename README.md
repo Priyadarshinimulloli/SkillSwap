@@ -1,6 +1,6 @@
 # 🎯 SkillSwap - Peer-to-Peer Skill Exchange Platform
 
-## 🚀 **Hackathon Project Overview**
+## 🚀 **Project Overview**
 
 SkillSwap is a modern web application that connects learners and teachers in a peer-to-peer skill exchange ecosystem. Users can offer their expertise while learning new skills from others in the community.
 
@@ -124,7 +124,6 @@ SkillSwap is a modern web application that connects learners and teachers in a p
 7. **Peer Learning** → Connect with other learners
 8. **Chat Integration** → Use built-in communication
 
-## 🏆 **Hackathon Highlights**
 
 ### **Innovation**
 - Peer-to-peer skill exchange model
@@ -194,17 +193,7 @@ SkillSwap is a modern web application that connects learners and teachers in a p
 ## 👥 **Team**
 - **Developer**: Priyadarshinimulloli
 - **Project**: SkillSwap
-- **Event**: Hackathon 2025
 
-## 📄 **License**
-MIT License - Open source project
-
----
-
-### 🎯 **Built for Hackathon - Ready to Scale!**
-| **Video API**  | [Daily.co](https://www.daily.co/)     |
-
----
 
 
 ---
