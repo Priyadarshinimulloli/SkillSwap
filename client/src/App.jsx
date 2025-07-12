@@ -1,4 +1,3 @@
-
 // App.jsx
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -7,13 +6,13 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import Dashboard from './pages/Dashboard';
-
 import Profile from './pages/Profile';
 import PeerLearning from './pages/PeerLearning';
 import VideoCall from './pages/VideoCall';
 import SkillManager from './pages/SkillManager';
 import Matches from './pages/Matches';
 import SkillMatchPage from './pages/SkillMatchPage';
+import SessionsPage from './pages/SessionsPage';
 
 // Your App component starts here
 const App = () => {
@@ -25,6 +24,7 @@ const App = () => {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/peer-learning" element={<PeerLearning />} />
+      <Route path="/sessions" element={<SessionsPage />} />
       <Route path="/call/:channelName" element={<VideoCall />} />
       <Route path="/skills" element={<SkillManager />} />
       <Route path="/matches" element={<Matches />} />

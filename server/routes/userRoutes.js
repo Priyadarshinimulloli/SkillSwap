@@ -1,6 +1,11 @@
 const express = require('express');
 const User = require('../models/User');
+const { signup, login } = require('../controllers/authController');
 const router = express.Router();
+
+// Authentication routes
+router.post('/auth/register', signup);
+router.post('/auth/login', login);
 
 // Create or update profile
 router.post('/profile', async (req, res) => {

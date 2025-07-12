@@ -1,19 +1,32 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { loginUser } from '../services/auth';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    // TODO: Replace with real login logic (e.g. API call)
-    alert(`Logged in with:\nEmail: ${email}`);
-
-    // Redirect to dashboard after successful login
-    navigate('/dashboard');
+    try {
+      // For demo purposes, allow any login
+      if (email && password) {
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userName', email.split('@')[0]);
+        alert(`✅ Logged in successfully!`);
+        navigate('/dashboard');
+      } else {
+        alert('Please enter email and password');
+      }
+    } catch (error) {
+      alert('Login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

@@ -1,7 +1,15 @@
 {
-  "dependencies": {
-    "@daily-co/daily-js": "^0.79.0",
-    "axios": "^1.9.0",
-    "react-router-dom": "^7.6.1"
-  }
+  "name": "skillswap",
+  "version": "1.0.0",
+  "description": "Peer-to-peer skill sharing platform",
+  "scripts": {
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "start:client": "cd client && npm run build && npm run preview",
+    "start:server": "cd server && npm start",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install"
+  },
+  "keywords": ["skill-sharing", "peer-learning", "education"],
+  "author": "Priyadarshinimulloli",
+  "license": "MIT"
 }

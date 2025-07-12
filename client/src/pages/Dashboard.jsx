@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import DashboardProfile from './DashBoardProfile';
+import DashboardProfile from './DashboardProfile';
 import ChatBox from '../components/ChatBox';
 
 const Dashboard = () => {
@@ -27,7 +27,7 @@ const Dashboard = () => {
           <Link to="/peer-learning" style={styles.navLink}>🔗 Peer Learning</Link>
           <Link to="/skills" style={styles.navLink}>🧠 Manage Skills</Link>
           <Link to="/matches" style={styles.navLink}>💡 Match Suggestions</Link>
-          <Link to="/call/demo-channel" style={styles.navLink}>🎥 Learning Sessions</Link>
+          <Link to="/sessions" style={styles.navLink}>🎥 Learning Sessions</Link>
         </nav>
       </div>
 
@@ -46,7 +46,7 @@ const Dashboard = () => {
             <Link to="/profile" style={styles.card}>👤 My Profile</Link>
             <Link to="/marketplace" style={styles.card}>🛒 Skill Marketplace</Link>
             <Link to="/peer-learning" style={styles.card}>🔗 Peer Learning</Link>
-            <Link to="/call/demo-channel" style={styles.card}>🎥 Learning Sessions</Link>
+            <Link to="/sessions" style={styles.card}>🎥 Learning Sessions</Link>
             <Link to="/skills" style={styles.card}>🧠 Manage My Skills</Link>
             <Link to="/matches" style={styles.card}>💡 Match Suggestions</Link>
           </div>
@@ -54,7 +54,7 @@ const Dashboard = () => {
 
         {/* Chat Toggle Button */}
         <button onClick={toggleChat} style={styles.chatButton}>
-          {showChat ? '❌ Close Chat' : '💬 Open Chat'}
+          {showChat ? '❌' : '💬'}
         </button>
 
         {/* Conditional ChatBox */}
@@ -98,11 +98,17 @@ const styles = {
     textDecoration: 'none',
     fontSize: '1rem',
     fontWeight: '500',
+    padding: '0.75rem 1rem',
+    borderRadius: '8px',
+    transition: 'background-color 0.3s ease',
+    display: 'block',
   },
   main: {
     flex: 1,
     padding: '2rem',
+    paddingRight: '3rem',
     position: 'relative',
+    overflowY: 'auto',
   },
   topbar: {
     display: 'flex',
@@ -133,6 +139,7 @@ const styles = {
     gap: '1.5rem',
     maxWidth: 1000,
     margin: '0 auto',
+    marginBottom: '6rem', // Add space for chat button
   },
     card: {
     padding: '1.5rem',
@@ -153,35 +160,53 @@ const styles = {
     right: '30px',
     backgroundColor: '#3E54AC',
     color: '#fff',
-    padding: '0.8rem 1.5rem',
+    padding: '1rem',
     border: 'none',
-    borderRadius: '25px',
-    fontSize: '1rem',
+    borderRadius: '50%',
+    fontSize: '1.5rem',
     fontWeight: 'bold',
     cursor: 'pointer',
     boxShadow: '0 6px 14px rgba(0, 0, 0, 0.15)',
-    zIndex: 1000,
+    zIndex: 1002,
+    width: '60px',
+    height: '60px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.3s ease',
   },
   chatBox: {
     position: 'fixed',
-    bottom: '80px',
+    bottom: '100px',
     right: '30px',
-    width: '320px',
-    height: '400px',
+    width: '380px',
+    height: '500px',
     backgroundColor: '#fff',
     borderRadius: '12px',
     boxShadow: '0 8px 20px rgba(0, 0, 0, 0.15)',
-    zIndex: 999,
+    zIndex: 1001,
     overflow: 'hidden',
   },
-  // Add to `card` style:
-'card:hover': {
-  transform: 'translateY(-4px)',
-  boxShadow: '0 10px 20px rgba(0, 0, 0, 0.15)',
-}
-
 };
 
+// Add responsive styles for chat
+const mediaQuery = window.matchMedia('(max-width: 768px)');
+const isMobile = mediaQuery.matches;
 
+if (isMobile) {
+  styles.chatBox = {
+    ...styles.chatBox,
+    width: '90vw',
+    height: '70vh',
+    right: '5vw',
+    bottom: '100px',
+  };
+  
+  styles.chatButton = {
+    ...styles.chatButton,
+    right: '20px',
+    bottom: '20px',
+  };
+}
 
 export default Dashboard;

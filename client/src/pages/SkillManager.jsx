@@ -1,27 +1,65 @@
-import React, { useState } from 'react';
-import './SkillManager.css'; // External CSS file for styling
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './SkillManager.css';
 
 const SkillManager = () => {
   const [skillsOffered, setSkillsOffered] = useState(["React"]);
   const [skillsWanted, setSkillsWanted] = useState(["UI/UX"]);
   const [newOffered, setNewOffered] = useState("");
   const [newWanted, setNewWanted] = useState("");
+  const userId = 1; // Replace with actual user ID from auth
 
-  const addSkill = (type) => {
+  // Load skills from backend on component mount
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/skills/${userId}`);
+        setSkillsOffered(res.data.skillsOffered || ["React"]);
+        setSkillsWanted(res.data.skillsWanted || ["UI/UX"]);
+      } catch (error) {
+        console.error('Error fetching skills:', error);
+        // Keep default values if API fails
+      }
+    };
+    fetchSkills();
+  }, [userId]);
+
+  const addSkill = async (type) => {
     if (type === 'offered' && newOffered.trim()) {
-      setSkillsOffered([...skillsOffered, newOffered.trim()]);
+      const newSkills = [...skillsOffered, newOffered.trim()];
+      setSkillsOffered(newSkills);
       setNewOffered("");
+      await saveSkills(newSkills, skillsWanted);
     } else if (type === 'wanted' && newWanted.trim()) {
-      setSkillsWanted([...skillsWanted, newWanted.trim()]);
+      const newSkills = [...skillsWanted, newWanted.trim()];
+      setSkillsWanted(newSkills);
       setNewWanted("");
+      await saveSkills(skillsOffered, newSkills);
     }
   };
 
-  const deleteSkill = (type, index) => {
+  const deleteSkill = async (type, index) => {
     if (type === 'offered') {
-      setSkillsOffered(skillsOffered.filter((_, i) => i !== index));
+      const newSkills = skillsOffered.filter((_, i) => i !== index);
+      setSkillsOffered(newSkills);
+      await saveSkills(newSkills, skillsWanted);
     } else {
-      setSkillsWanted(skillsWanted.filter((_, i) => i !== index));
+      const newSkills = skillsWanted.filter((_, i) => i !== index);
+      setSkillsWanted(newSkills);
+      await saveSkills(skillsOffered, newSkills);
+    }
+  };
+
+  const saveSkills = async (offered, wanted) => {
+    try {
+      await axios.put(`http://localhost:5000/api/skills/${userId}`, {
+        skillsOffered: offered,
+        skillsWanted: wanted,
+      });
+      console.log('Skills saved successfully');
+    } catch (error) {
+      console.error('Failed to save skills:', error);
+      alert('Failed to save skills. Please try again.');
     }
   };
 
